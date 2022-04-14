@@ -16,21 +16,42 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 	debugText_ = DebugText::GetInstance();
 	textureHandle_ = TextureManager::Load("mario.jpg");
+	//サウンドデータの読み込み
+	soundDataHandle_ = audio_->LoadWave("fanfare.wav");
+	//音声再生
+	voiceHandle_ = audio_->PlayWave(soundDataHandle_, true);
+	//スプライト生成
+	sprite_ = Sprite::Create(textureHandle_, {100, 50});
 	//3Dモデル生成
 	model_ = Model::Create();
-	// X,Y,Z方向のスケーリングを設定
-	worldtransform_.scale_ = {5.0f, 5.0f, 5.0f};
-	//X,Y,Z軸周りの回転角を設定
-	worldtransform_.rotation_ = {XM_PI / 4.0f, XM_PI / 4.0f,0.0f};
-	//X,Y,Z軸周りの平行移動を設定
-	worldtransform_.translation_ = {10.0f, 10.0f, 10.0f};
+	
 	//ワールドトランスフォームの初期化
 	worldtransform_.Initialize();
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();
 }
 
-void GameScene::Update() {}
+void GameScene::Update() {
+	//スプライトの今も座標を取得
+	XMFLOAT2 position = sprite_->GetPosition();
+	//座標を{2,0}移動
+	position.x += 2.0f;
+	position.y += 1.0f;
+	//移動した座標をスプライトに反映
+	sprite_->SetPosition(position);
+	//スペースキーを押した瞬間
+	if (input_->TriggerKey(DIK_SPACE)) {
+		//音声停止
+		audio_->StopWave(voiceHandle_);
+	}
+
+	//変数の値をインクリメント
+	value_++;
+	//値を含んだ文字列
+	std::string strDebug = std::string("value") + std::to_string(value_);
+	//デバッグテキストの表示
+	debugText_->Print(strDebug, 50, 50, 1.0f);
+}
 
 void GameScene::Draw() {
 
@@ -71,7 +92,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
-
+	sprite_->Draw();
 	// デバッグテキストの描画
 	debugText_->DrawAll(commandList);
 	//
