@@ -30,7 +30,19 @@ void GameScene::Initialize() {
 	viewProjection_.Initialize();
 }
 
-void GameScene::Update() {}
+void GameScene::Update() {
+	
+	//値を含んだ文字列
+	std::string strDebug = std::string("translation:(10.000000,10.000000,10.000000)");
+	//デバッグテキストの表示
+	debugText_->Print(strDebug, 50, 50, 1.0f);
+	std::string strDebug2 = std::string("rotation:(0.785398,0.785398,0.000000)");
+	//デバッグテキストの表示
+	debugText_->Print(strDebug2, 50, 70, 1.0f);
+	std::string strDebug3 = std::string("scale:(5.000000,5.000000,5.000000)");
+	//デバッグテキストの表示
+	debugText_->Print(strDebug3, 50, 90, 1.0f);
+}
 
 void GameScene::Draw() {
 
