@@ -45,11 +45,11 @@ void GameScene::Initialize() {
 	worldtransform_[PartId::Head].Initialize();
 	worldtransform_[PartId::Head].parent_ = &worldtransform_[PartId::Chest];
 	worldtransform_[PartId::Head].translation_ = {0, 4.5f, 0};
-	//左上
+	//左腕
 	worldtransform_[PartId::ArmL].Initialize();
 	worldtransform_[PartId::ArmL].parent_ = &worldtransform_[PartId::Chest];
 	worldtransform_[PartId::ArmL].translation_ = {-4.5f, 0, 0};
-	//右上
+	//右腕
 	worldtransform_[PartId::ArmR].Initialize();
 	worldtransform_[PartId::ArmR].parent_ = &worldtransform_[PartId::Chest];
 	worldtransform_[PartId::ArmR].translation_ = {4.5f, 0, 0};
