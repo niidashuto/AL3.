@@ -9,8 +9,8 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-#include <DirectXMath.h>
-
+#include"DebugCamera.h"
+#define PI 3.1415926535
 /// <summary>
 /// ゲームシーン
 /// </summary>
@@ -42,44 +42,84 @@ class GameScene {
 	/// </summary>
 	void Draw();
 
-	enum PartId {
-		Root,
-		Spine,
-		Chest,
-		Head,
-		ArmL,
-		ArmR,
-		Hip,
-		LegL,
-		LegR,
-	};
   private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
 	DebugText* debugText_ = nullptr;
 	//テクスチャハンドル
-	uint_fast32_t textureHandle_ = 0;
-	// 3Dモデル
+	uint32_t textureHandle_ = 0;
+	//3Dモデル
 	Model* model_ = nullptr;
 	//ワールドトランスフォーム
-	WorldTransform worldtransform_[100];
+	WorldTransform worldtransform_;
 	//ビュープロジェクション
-	ViewProjection viewProjection_;
-	int32_t value_ = 0;
-	float translationValX_ = 10.0f;
-	float translationValY_ = 10.0f;
-	float translationValZ_ = 10.0f;
+	ViewProjection viewprojection_;
+	//デバッグカメラ
+	DebugCamera* debugCamera_ = nullptr;
+	//頂点
+	Vector3 vertex[8] = {
+	  {0.0f, 0.0f, 0.0f},
+      {5.0f, 0.0f, 0.0f},
+      {5.0f, 0.0f, 5.0f},
+	  {0.0f, 0.0f, 5.0f},
+      {0.0f, 5.0f, 0.0f},
+      {5.0f, 5.0f, 0.0f},
+	  {5.0f, 5.0f, 5.0f},
+      {0.0f, 5.0f, 5.0f}
+    };
 
-	float rotationValX_ = 0.785398f;
-	float rotationValY_ = 0.785398f;
-	float rotationValZ_ = 0.0f;
+	float vertexMoved[8][4] = {};
+	float vertexScale[8][4] = {};
+	float vertexRotate[8][4] = {};
 
-	float scaleValX_ = 5.0f;
-	float scaleValY_ = 5.0f;
-	float scaleValZ_ = 5.0f;
-	//カメラ上方向の角度
-	float viewAngle = 0.0f;
+	float ver[8][4] = {
+	  {0.0f, 0.0f, 0.0f, 1.0f},
+      {5.0f, 0.0f, 0.0f, 1.0f},
+      {5.0f, 0.0f, 5.0f, 1.0f},
+	  {0.0f, 0.0f, 5.0f, 1.0f},
+      {0.0f, 5.0f, 0.0f, 1.0f},
+      {5.0f, 5.0f, 0.0f, 1.0f},
+	  {5.0f, 5.0f, 5.0f, 1.0f},
+      {0.0f, 5.0f, 5.0f, 1.0f}
+    };
+	
+	//辺
+	int edgeList[12][2] = {
+	  {0, 1},
+      {1, 2},
+      {2, 3},
+      {3, 0},
+      {4, 5},
+      {5, 6},
+	  {6, 7},
+      {7, 4},
+      {0, 4},
+      {1, 5},
+      {2, 6},
+      {3, 7}
+    };
+	float affinMove[4][4] = {
+	  {1.0f, 0.0f, 0.0f, 5.0f},
+	  {0.0f, 1.0f, 0.0f, 5.0f},
+	  {0.0f, 0.0f, 1.0f, 5.0f},
+	  {0.0f, 0.0f, 0.0f, 1.0f}
+	};
+	float affinScale[4][4] = {
+	  {2.0f, 0.0f, 0.0f, 0.0f},
+	  {0.0f, 2.0f, 0.0f, 0.0f},
+	  {0.0f, 0.0f, 2.0f, 0.0f},
+	  {0.0f, 0.0f, 0.0f, 1.0f}
+    };
+	double affinRotate[4][4] = {
+	  {1.0f,0.0f,0.0f,0.0f},
+      {0.0f,cos(PI / 4),-sin(PI/4),0.0f},
+	  {0.0f, sin(PI / 4),cos(PI/4),0.0f},
+	  {0.0f,0.0f,0.0f,1.0f}
+	};
+	Vector4 color = {1.0f, 1.0f, 1.0f, 1.0f};
+	Vector4 color2 = {1.0f, 0.0f, 0.0f, 1.0f};
+	Vector4 color3 = {0.0f, 1.0f, 0.0f, 1.0f};
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
