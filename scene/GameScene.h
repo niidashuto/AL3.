@@ -10,6 +10,7 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include"DebugCamera.h"
+#include"Player.h"
 #define PI 3.1415926535
 /// <summary>
 /// ゲームシーン
@@ -47,12 +48,14 @@ class GameScene {
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
 	DebugText* debugText_ = nullptr;
+	//自キャラ
+	Player* player_ = nullptr;
 	//テクスチャハンドル
 	uint32_t textureHandle_ = 0;
 	//3Dモデル
 	Model* model_ = nullptr;
 	//ワールドトランスフォーム
-	WorldTransform worldtransform_;
+	
 	//ビュープロジェクション
 	ViewProjection viewprojection_;
 	//デバッグカメラ
@@ -123,4 +126,5 @@ class GameScene {
 	/// <summary>
 	/// ゲームシーン用
 	/// </summary>
+	
 };
