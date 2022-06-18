@@ -24,21 +24,21 @@ void GameScene::Initialize() {
 	//ビュープロジェクションの初期化
 	viewprojection_.Initialize();
 	//デバッグカメラの生成
-	debugCamera_ = new DebugCamera(100, 100);
+	//debugCamera_ = new DebugCamera(100, 100);
 	//ライン描画が参照するビュープロジェクションを指定する(アドレス渡し)
-	PrimitiveDrawer::GetInstance()->SetViewProjection(&debugCamera_->GetViewProjection());
+	//PrimitiveDrawer::GetInstance()->SetViewProjection(&debugCamera_->GetViewProjection());
 	//軸方向表示を有効にする
 	AxisIndicator::GetInstance()->SetVisible(true);
 	//軸方向表示が参照するビュープロジェクションを指定する(アドレス渡し)
-	AxisIndicator::GetInstance()->SetTargetViewProjection(&debugCamera_->GetViewProjection());
+	//AxisIndicator::GetInstance()->SetTargetViewProjection(&debugCamera_->GetViewProjection());
 	//自キャラの生成
 	player_ = new Player();
 	//自キャラの初期化
 	player_->Initialaze(model_,textureHandle_);
 }
 
-void GameScene::Update() { debugCamera_->Update();
-	//player_->Update();
+void GameScene::Update() { //debugCamera_->Update();
+	player_->Update();
 }
 
 void GameScene::Draw() {
@@ -70,7 +70,7 @@ void GameScene::Draw() {
 	/// </summary>
 	//3Dモデル描画
 	//model_->Draw(worldTransform_, viewprojection_, textureHandle_);
-	//player_->Draw();
+	player_->Draw(viewprojection_);
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion

@@ -1,5 +1,4 @@
 ﻿#pragma once
-
 #include "Audio.h"
 #include "DirectXCommon.h"
 #include "DebugText.h"
@@ -59,7 +58,7 @@ class GameScene {
 	//ビュープロジェクション
 	ViewProjection viewprojection_;
 	//デバッグカメラ
-	DebugCamera* debugCamera_ = nullptr;
+	//DebugCamera* debugCamera_ = nullptr;
 	//頂点
 	Vector3 vertex[8] = {
 	  {0.0f, 0.0f, 0.0f},
